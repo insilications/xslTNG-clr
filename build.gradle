@@ -717,7 +717,7 @@ fileTree(dir: "src/test/resources/xml", include: "*.xml").each { xml ->
     inputs.files fileTree(dir: "src/main/xslt")
     inputs.files fileTree(dir: "src/test/resources")
     outputs.file("${buildDir}/actual/${base}.html")
-    commandLine "java",
+    commandLine "java13",
       "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
       "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
       "-cp", EXCP, "net.sf.saxon.Transform",
@@ -744,7 +744,7 @@ fileTree(dir: "src/test/resources/xml", include: "*.xml").each { xml ->
     inputs.files fileTree(dir: "src/main/xslt")
     inputs.files fileTree(dir: "src/test/resources")
     outputs.file("src/test/resources/expected/${base}.html")
-    commandLine "java",
+    commandLine "java13",
       "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
       "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
       "-cp", EXCP, "net.sf.saxon.Transform",
@@ -770,7 +770,7 @@ fileTree(dir: "src/test/resources/xml", include: "*.xml").each { xml ->
     inputs.files fileTree(dir: "src/main/xslt")
     inputs.files fileTree(dir: "src/test/resources")
     outputs.file("${buildDir}/actual/${base}.olinkdb")
-    commandLine "java",
+    commandLine "java13",
       "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
       "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
       "-cp", EXCP, "net.sf.saxon.Transform",
@@ -808,7 +808,7 @@ fileTree(dir: "src/test/resources/xml", include: "*.xml").each { xml ->
     inputs.files fileTree(dir: "src/main/xslt")
     inputs.files fileTree(dir: "src/test/resources")
     outputs.file("${buildDir}/actual/index.html")
-    commandLine "java",
+    commandLine "java13",
       "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
       "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
       "-cp", EXCP, "net.sf.saxon.Transform",
@@ -838,7 +838,7 @@ fileTree(dir: "src/test/resources/xml", include: "*.xml").each { xml ->
     inputs.files fileTree(dir: "src/main/xslt")
     inputs.files fileTree(dir: "src/test/resources")
     outputs.file("${buildDir}/actual/${base}.pdf.html")
-    commandLine "java",
+    commandLine "java13",
       "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
       "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
       "-cp", EXCP, "net.sf.saxon.Transform",
@@ -990,7 +990,7 @@ testDrivers.each { driver ->
         Task t = task "${basename}.html"(type: Exec, dependsOn: ['makeXslt']) {
           inputs.file("${buildDir}/generated-xml/${basename}.xml")
           outputs.file("${buildDir}/actual/${basename}.html")
-          commandLine "java",
+          commandLine "java13",
             "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
             "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
             "-cp", EXCP, "net.sf.saxon.Transform",
@@ -1007,7 +1007,7 @@ testDrivers.each { driver ->
         t = task "${basename}.expected"(type: Exec, dependsOn: ['makeXslt']) {
           inputs.file("${buildDir}/generated-xml/${basename}.xml")
           outputs.file("src/test/resources/expected/${basename}.html")
-          commandLine "java",
+          commandLine "java13",
             "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
             "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
             "-cp", EXCP, "net.sf.saxon.Transform",
@@ -1046,7 +1046,7 @@ fileTree(dir: "src/main/locales/locale-10", include: "*.xml").each { xml ->
     inputs.files xml.toString()
     inputs.files "tools/xform-10-tng.xsl"
     outputs.file(localetng)
-    commandLine "java",
+    commandLine "java13",
       "-cp", EXCP, "net.sf.saxon.Transform",
       xml.toString(),
       "-xsl:tools/xform-10-tng.xsl",
@@ -1058,7 +1058,7 @@ fileTree(dir: "src/main/locales/locale-10", include: "*.xml").each { xml ->
     inputs.files localetng
     inputs.files "tools/xform-locale.xsl"
     outputs.file("${buildDir}/xslt/locale/${base}")
-    commandLine "java",
+    commandLine "java13",
       "-cp", EXCP, "net.sf.saxon.Transform",
       localetng,
       "-xsl:tools/xform-locale.xsl",
@@ -1071,7 +1071,7 @@ fileTree(dir: "src/main/locales/locale-10", include: "*.xml").each { xml ->
 task makeVersion(type: Exec) {
   inputs.file("tools/version.xsl")
   outputs.file("build/xslt/VERSION.xsl")
-  commandLine "java",
+  commandLine "java13",
     "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
     "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
     "-cp", EXCP, "net.sf.saxon.Transform",
@@ -1086,7 +1086,7 @@ task makeParameterMaps(type: Exec) {
   inputs.file("tools/parameter-maps.xsl")
   inputs.file("src/main/xslt/param.xsl")
   outputs.file("build/xslt/parameter-maps.xsl")
-  commandLine "java",
+  commandLine "java13",
     "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
     "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
     "-cp", EXCP, "net.sf.saxon.Transform",
@@ -1108,7 +1108,7 @@ task makeXslt(type: Copy,
 // ============================================================
 
 task testJarMain(type: Exec, dependsOn: jar) {
-    commandLine "java",
+    commandLine "java13",
       "-jar", "build/libs/docbook-xslTNG-${xslTNGversion}.jar",
       "src/test/resources/xml/article.001.xml",
       "-o:/dev/null"
@@ -1178,7 +1178,7 @@ task report(type: Exec,
   inputs.file("${buildDir}/docbook-result.xml")
   inputs.file("tools/report.xsl")
   outputs.file("${buildDir}/report/index.html")
-  commandLine "java",
+  commandLine "java13",
     "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
     "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
     "-cp", EXCP, "net.sf.saxon.Transform",
@@ -1312,7 +1312,7 @@ task zipStageCatalog(type: Exec, dependsOn: ['makeUris', 'zipStageXslt']) {
   inputs.file("build/stage/jar/etc/uris.xml")
   inputs.file("tools/make-catalog.xsl")
   outputs.file("${buildDir}/stage/zip/xslt/catalog.xml")
-  commandLine "java",
+  commandLine "java13",
     "-cp", EXCP, "net.sf.saxon.Transform",
     "build/stage/jar/etc/uris.xml",
     "-xsl:tools/make-catalog.xsl",
@@ -1349,7 +1349,7 @@ task tdg(type: Exec, dependsOn: ['makeXslt']) {
   inputs.file("tdg/book.xml")
   inputs.file("tdg/book.xsl")
   outputs.file("tdg/html/index.html")
-  commandLine "java",
+  commandLine "java13",
     "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
     "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
     "-cp", EXCP, "net.sf.saxon.Transform",
@@ -1372,7 +1372,7 @@ task explorer(type: Exec,
   inputs.files fileTree(dir: "build/xsltexplorer-${xsltExplorerVersion}")
   outputs.file("build/explorer/index.html")
   outputs.file("build/docbook-xslTNG.xml")
-  commandLine "java",
+  commandLine "java13",
     "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
     "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
     "-cp", EXCP, "net.sf.saxon.Transform",
@@ -1446,7 +1446,7 @@ task xincludeGuide(type: Exec, dependsOn: ['guideResources']) {
   inputs.files fileTree(dir: "src/guide/xml")
   inputs.file("tools/xinclude.xsl")
   outputs.file("build/guide.xml")
-  commandLine "java",
+  commandLine "java13",
     "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
     "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
     "-cp", EXCP, "net.sf.saxon.Transform",
@@ -1463,7 +1463,7 @@ task copyGuide(type: Exec, dependsOn: ['xincludeGuide']) {
   inputs.file("build/guide.xml")
   inputs.file("tools/guide-pis.xsl")
   outputs.file("build/guide/guide.xml")
-  commandLine "java",
+  commandLine "java13",
     "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
     "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
     "-cp", EXCP, "net.sf.saxon.Transform",
@@ -1489,7 +1489,7 @@ task guide(type: Exec, dependsOn: ['makeXslt', 'validateGuide', 'explorer']) {
   inputs.file("build/docbook-xslTNG.xml")
   inputs.file("build/guide/guide.xml")
   outputs.file("build/guide/index.html")
-  commandLine "java",
+  commandLine "java13",
     "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
     "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
     "-cp", EXCP, "net.sf.saxon.Transform",
@@ -1517,7 +1517,7 @@ task "guide.pdf.html"(type: Exec, dependsOn: ['makeXslt', 'validateGuide', 'expl
   inputs.file("build/guide/guide.xml")
   inputs.files fileTree(dir: "src/guide/xsl")
   outputs.file("build/guide/guide.pdf.html")
-  commandLine "java",
+  commandLine "java13",
     "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
     "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
     "-cp", EXCP, "net.sf.saxon.Transform",
@@ -1564,7 +1564,7 @@ task "guide.olinkdb"(type: Exec, dependsOn: ['guide']) {
   inputs.file("build/docbook-xslTNG.xml")
   inputs.file("build/guide/guide.xml")
   outputs.file("build/guide/index.html")
-  commandLine "java",
+  commandLine "java13",
     "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
     "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
     "-cp", EXCP, "net.sf.saxon.Transform",
@@ -1810,7 +1810,7 @@ publishing {
 
 task xsltest(type: Exec) {
     inputs.files fileTree(dir: "scratch")
-    commandLine "java",
+    commandLine "java13",
     "-Dorg.docbook.xsltng.extensions.verbose=${verbose}",
     "-Dorg.docbook.extensions.pygmentize=${pygmentize}",
     "-cp", EXCP, "net.sf.saxon.Transform",
